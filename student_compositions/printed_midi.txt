@@ -1,0 +1,72 @@
+Equal Temperament: 2^(1/12) = 1.059463
+midi note: 24 --- 32.7032
+midi note: 25 --- 34.6478
+midi note: 26 --- 36.7081
+midi note: 27 --- 38.8909
+midi note: 28 --- 41.2034
+midi note: 29 --- 43.6535
+midi note: 30 --- 46.2493
+midi note: 31 --- 48.9994
+midi note: 32 --- 51.9131
+midi note: 33 --- 55
+midi note: 34 --- 58.2705
+midi note: 35 --- 61.7354
+midi note: 36 --- 65.4064
+midi note: 37 --- 69.2957
+midi note: 38 --- 73.4162
+midi note: 39 --- 77.7817
+midi note: 40 --- 82.4069
+midi note: 41 --- 87.3071
+midi note: 42 --- 92.4986
+midi note: 43 --- 97.9989
+midi note: 44 --- 103.826
+midi note: 45 --- 110
+midi note: 46 --- 116.541
+midi note: 47 --- 123.471
+midi note: 48 --- 130.813
+midi note: 49 --- 138.591
+midi note: 50 --- 146.832
+midi note: 51 --- 155.563
+midi note: 52 --- 164.814
+midi note: 53 --- 174.614
+midi note: 54 --- 184.997
+midi note: 55 --- 195.998
+midi note: 56 --- 207.652
+
+DO  midi note: 57 --- 220
+DO# midi note: 58 --- 233.082
+RE  midi note: 59 --- 246.942
+RE# midi note: 60 --- 261.626
+MI  midi note: 61 --- 277.183
+FA  midi note: 62 --- 293.665
+FA# midi note: 63 --- 311.127
+SO  midi note: 64 --- 329.628
+SO# midi note: 65 --- 349.228
+LA  midi note: 66 --- 369.994
+LA# midi note: 67 --- 391.995
+SI  midi note: 68 --- 415.305
+
+midi note: 69 --- 440
+midi note: 70 --- 466.164
+midi note: 71 --- 493.883
+midi note: 72 --- 523.251
+midi note: 73 --- 554.365
+midi note: 74 --- 587.33
+midi note: 75 --- 622.254
+midi note: 76 --- 659.255
+midi note: 77 --- 698.456
+midi note: 78 --- 739.989
+midi note: 79 --- 783.991
+midi note: 80 --- 830.609
+midi note: 81 --- 880
+midi note: 82 --- 932.328
+midi note: 83 --- 987.767
+midi note: 84 --- 1046.5
+midi note: 85 --- 1108.73
+midi note: 86 --- 1174.66
+midi note: 87 --- 1244.51
+midi note: 88 --- 1318.51
+midi note: 89 --- 1396.91
+midi note: 90 --- 1479.98
+midi note: 91 --- 1567.98
+midi note: 92 --- 1661.22
