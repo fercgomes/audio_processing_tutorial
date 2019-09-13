@@ -20,7 +20,7 @@ class GainProcessor extends AudioWorkletProcessor {
       const outputChannel = output[channel];
       if (gain.length === 1) {
         for (let i = 0; i < inputChannel.length; ++i)
-          outputChannel[i] = inputChannel[i] * gain[0] + randi;
+          outputChannel[i] = inputChannel[i] * gain[0];
       } else {
         for (let i = 0; i < inputChannel.length; ++i)
           outputChannel[i] = inputChannel[i] * gain[i];
