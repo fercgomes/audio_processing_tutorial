@@ -24,14 +24,16 @@ class DelayProcessor extends AudioWorkletProcessor {
       if (delay.length === 1) {
         for (let i = 0; i < inputChannel.length; ++i)
           {
-              if (i+delay[0]<inputChannel.length)
-                outputChannel[i + delay[0]] += inputChannel[i] * decay;
+              //if (i+delay[0]<inputChannel.length)
+                outputChannel[i] += inputChannel[i];
+                //outputChannel[i + delay[0]] += inputChannel[i] * decay;
           }
       } else {
         for (let i = 0; i < inputChannel.length; ++i)
           {
-              if (i+delay[i]<inputChannel.length)
-                outputChannel[i + delay[i]] += inputChannel[i] * decay;
+             // if (i+delay[i]<inputChannel.length)
+                outputChannel[i] += inputChannel[i];
+                //outputChannel[i + delay[i]] += inputChannel[i] * decay;
           }
       }
     }

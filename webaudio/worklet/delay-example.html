@@ -4,6 +4,37 @@
 <script>
         var context = new(window.AudioContext || window.webkitAudioContext)();
 
+ //function runDemo() {
+   function init_on_load() {
+
+        if (!navigator.getUserMedia)
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({
+                    audio: true
+                },
+                function(stream) {
+                    console.log('starting mic');
+                    start_microphone(stream);
+                    draw();
+                },
+                function(e) {
+                    alert('Error capturing audio.');
+                }
+            );
+
+        } else {
+            alert('getUserMedia not supported in this browser.');
+        }
+
+
+    }
+
+
+
+
 
         function audio_resume() {
             bt_div = this;
@@ -19,10 +50,11 @@
             }
         }
 
-   function init_on_load() {
+   function start_microphon() {
   // Loads module script via AudioWorklet.
   context.audioWorklet.addModule('delay-processor.js').then(() => {
-    let oscillator = new OscillatorNode(context);
+    //let oscillator = new OscillatorNode(context);
+      let microphone_stream = window.context.createMediaStreamSource(stream);
 
     // After the resolution of module loading, an AudioWorkletNode can be
     // constructed.
@@ -30,8 +62,9 @@
 
        window.delayWorkletNode = delayWorkletNode;
     // AudioWorkletNode can be interoperable with other native AudioNodes.
-    oscillator.connect(delayWorkletNode).connect(context.destination);
-    oscillator.start();
+    microphone_stream.connect(delayWorkletNode).connect(context.destination);
+    //oscillator.connect(delayWorkletNode).connect(context.destination);
+    //oscillator.start();
   });
 
        

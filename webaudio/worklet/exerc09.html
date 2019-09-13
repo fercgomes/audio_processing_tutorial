@@ -1,0 +1,156 @@
+<!-- 
+Copyright (c) 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+
+
+
+<script>
+    function runDemo() {
+
+        if (!navigator.getUserMedia)
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({
+                    audio: true
+                },
+                function(stream) {
+                    console.log('starting mic');
+                    start_microphone(stream);
+                    draw();
+                },
+                function(e) {
+                    alert('Error capturing audio.');
+                }
+            );
+
+        } else {
+            alert('getUserMedia not supported in this browser.');
+        }
+
+
+    }
+
+    function start_microphone(stream) {
+
+        window.context = new AudioContext();
+        let microphone_stream = window.context.createMediaStreamSource(stream);
+
+        var analyser = window.context.createAnalyser();
+        analyser.fftSize = 2048 * 2;
+        var bufferLength = analyser.frequencyBinCount;
+        var dataArray = new Uint8Array(bufferLength);
+        window.dataArray = dataArray;
+        window.bufferLength = bufferLength;
+        analyser.getByteFrequencyData(dataArray);
+        window.analyser = analyser;
+        microphone_stream.connect(analyser).connect(window.context.destination);
+
+        var canvas = document.getElementById("oscilloscope");
+        var canvasCtx = canvas.getContext("2d");
+        window.canvas = canvas;
+        window.canvasCtx = canvasCtx;
+
+    }
+
+    function audio_resume() {
+        console.log('audio resume');
+
+        bt_div = this;
+        if (window.context.state === 'running') {
+            window.context.suspend().then(function() {
+                bt_div.style.backgroundColor = "red";
+            });
+        } else if (context.state === 'suspended') {
+            window.context.resume().then(function() {
+                console.log('Playback resumed successfully');
+                bt_div.style.backgroundColor = "green";
+
+
+
+            });
+        }
+    }
+
+
+
+    function init_on_load() {
+
+        bt = document.getElementById("bt-resume");
+        bt.addEventListener('click', audio_resume);
+
+        window.FreqHz = document.getElementById("FreqHz");
+
+        runDemo();
+
+
+    }
+
+
+
+
+
+    function draw() {
+
+        requestAnimationFrame(draw);
+
+        window.analyser.getByteFrequencyData(window.dataArray);
+
+        var mm = 0;
+        var argm = 0;
+        for (var i = 0; i < window.bufferLength; i++) {
+            if (window.dataArray[i] > mm) {
+                mm = window.dataArray[i];
+                argm = i;
+            }
+        }
+
+        var Hz = window.context.sampleRate * argm / (window.bufferLength * 2);
+
+        //console.log("Hz: " + Hz + "  length: " + window.bufferLength);
+        window.FreqHz.innerHTML = Hz + "Hz";
+
+        window.canvasCtx.fillStyle = "rgb(200, 200, 200)";
+        window.canvasCtx.fillRect(0, 0, window.canvas.width, window.canvas.height);
+
+
+        var barWidth = (window.canvas.width / window.bufferLength) * 2.5;
+        var barHeight;
+        var x = 0;
+
+        for (var i = 0; i < window.bufferLength; i++) {
+            barHeight = window.dataArray[i];
+
+            window.canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
+            window.canvasCtx.fillRect(x, window.canvas.height - barHeight / 2, barWidth, barHeight / 2);
+
+            x += barWidth + 1;
+        }
+
+    }
+
+</script>
+
+
+<body onload="init_on_load()">
+    <span>Exercício 05</span>
+    <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
+
+    <canvas id="oscilloscope" style="position: absolute; top:400px; left:300px; width:600px; height:300px; border: 1px solid black; "></canvas>
+
+    <div id="FreqHz" style="position: absolute; top:350px; left:300px; width:600px; height:50px; border: 1px solid black; "> </div>
+
+</body>
+
+</html>
