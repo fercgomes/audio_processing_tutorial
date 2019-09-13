@@ -26,7 +26,7 @@
   //const context = new AudioContext();
 
   // Loads module script via AudioWorklet.
-  context.audioWorklet.addModule('gain-processor.js').then(() => {
+  context.audioWorklet.addModule('gain_processor.js').then(() => {
     let oscillator = new OscillatorNode(context);
  //    var oscillator = context.createOscillator();
  //           oscillator.type = 'sine';
@@ -35,7 +35,7 @@
 
     // After the resolution of module loading, an AudioWorkletNode can be
     // constructed.
-    let gainWorkletNode = new AudioWorkletNode(context, 'gain-processor');
+    let gainWorkletNode = new AudioWorkletNode(context, 'gain_processor');
 
     // AudioWorkletNode can be interoperable with other native AudioNodes.
     oscillator.connect(gainWorkletNode).connect(context.destination);
