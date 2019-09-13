@@ -29,7 +29,7 @@
             bt.addEventListener('click', audio_resume);
 
             var oscillator = context.createOscillator();
-            oscillator.type = 'sine';
+            oscillator.type = 'triangle';
             oscillator.frequency.value = 440;
             oscillator.connect(context.destination);
             oscillator.start();
@@ -39,7 +39,7 @@
 </head>
 
 <body onload="init_on_load()">
-    <span>Exercício 01</span>
+    <span>Exercício 01 - A simple oscillator</span>
     <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
 
 

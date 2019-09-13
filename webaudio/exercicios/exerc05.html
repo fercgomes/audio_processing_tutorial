@@ -28,32 +28,12 @@
             bt = document.getElementById("bt-resume");
             bt.addEventListener('click', audio_resume);
 
-            //            window.gainNode = context.createGain();
-            //            window.gainNode.gain.value = 0.5;
-            //            window.oscillator = context.createOscillator();
-            //            window.oscillator.type = 'sine';
-            //            window.oscillator.frequency.value = 440;
-            //            window.oscillator.connect(window.gainNode);
-            //            window.gainNode.connect(context.destination);
-            //            window.oscillator.start();
-            //
-            //            window.gainNode2 = context.createGain();
-            //            window.gainNode2.gain.value = 0.5;
-            //            window.oscillator2 = context.createOscillator();
-            //            window.oscillator2.type = 'sine';
-            //            window.oscillator2.frequency.value = 440;
-            //            window.oscillator2.connect(window2.gainNode);
-            //            window.gainNode2.connect(context.destination);
-            //            window.oscillator.start();
-
-
-
             // Instantiating
             var E = context.createOscillator(); // Modulator
             var F = context.createOscillator(); // Carrier
 
             // Setting frequencies
-            E.frequency.value = 440;
+            E.frequency.value = 3;
             F.frequency.value = 440;
 
             // Modulation depth
@@ -74,7 +54,7 @@
 
             bt = document.getElementById("bt-range");
             bt.addEventListener('input', function() {
-                window.E.frequency.value = this.value;
+                window.E.frequency.value = this.value/10;
                 console.log("range value:" + this.value);
             });;
 
@@ -84,10 +64,10 @@
 </head>
 
 <body onload="init_on_load()">
-    <span>Exercício 01</span>
+    <span>Exercício 05 - Playing with audio node parameters and modulation. </span>
     <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
 
-    <input type="range" id="bt-range" min="40" max="10000" value="4400" step="1" style="position: absolute; top: 100px; left: 100px; width: 300px">
+    <input type="range" id="bt-range" min="0" max="1000" value="1" step="1" style="position: absolute; top: 100px; left: 100px; width: 300px">
 
 </body>
 
