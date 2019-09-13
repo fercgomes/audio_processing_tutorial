@@ -24,12 +24,12 @@ class NoiseProcessor extends AudioWorkletProcessor {
         for (let i = 0; i < inputChannel.length; ++i)
           {
               
-             outputChannel[i] = inputChannel[i] + Math.rand()*noise[0];;
+             outputChannel[i] = inputChannel[i] + Math.random()*noise[0];;
           }
       } else {
         for (let i = 0; i < inputChannel.length; ++i)
           {
-             outputChannel[i] = inputChannel[i] + Math.rand()*noise[i];;
+             outputChannel[i] = inputChannel[i] + Math.random()*noise[i];;
           }
       }
     }
