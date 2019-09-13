@@ -56,7 +56,11 @@
                 console.log("range value:" + this.value);
                 console.log("gain: :" + window.gainWorkletNode );
 
-                window.gainWorkletNode.gain = this.value/10000;
+//                window.gainWorkletNode.gain = this.value/10000;
+
+                const gainParam = window.gainWorkletNode.parameters.get('gain');
+                //gainParam.setValueAtTime(0, audioContext.currentTime)
+                gainParam.value =  this.value/10000;
 
             });;
 
