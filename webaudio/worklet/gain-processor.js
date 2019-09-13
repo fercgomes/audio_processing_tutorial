@@ -31,5 +31,5 @@ class GainProcessor extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor('gain_processor', GainProcessor);
+registerProcessor('gain-processor', GainProcessor);
 
