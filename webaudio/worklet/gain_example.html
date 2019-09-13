@@ -18,7 +18,8 @@
         }
 
 // Existing code unchanged.
-window.onload = function() {
+//window.onload = function() {
+   function init_on_load() {
 
   const context = new AudioContext();
 
@@ -38,6 +39,7 @@ window.onload = function() {
     oscillator.connect(gainWorkletNode).connect(context.destination);
     oscillator.start();
   });
+
 
 
    var bt = document.getElementById("bt-resume");
