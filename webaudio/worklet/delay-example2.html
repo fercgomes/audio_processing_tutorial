@@ -21,7 +21,7 @@
 
    function init_on_load() {
   // Loads module script via AudioWorklet.
-  context.audioWorklet.addModule('delay-processor.js').then(() => {
+  context.audioWorklet.addModule('delay-processor2.js').then(() => {
     let oscillator = new OscillatorNode(context);
 
     // After the resolution of module loading, an AudioWorkletNode can be
