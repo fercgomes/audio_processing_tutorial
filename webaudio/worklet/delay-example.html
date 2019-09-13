@@ -51,7 +51,6 @@
                 function(stream) {
                     console.log('starting mic');
                     start_microphone(stream);
-                    draw();
                 },
                 function(e) {
                     alert('Error capturing audio.');
@@ -61,10 +60,6 @@
         } else {
             alert('getUserMedia not supported in this browser.');
         }
-
-
-    }
-
 
 
 
@@ -81,6 +76,11 @@
                 delayParam.value =  Math.round(this.value * 44.1); //in samples
 
             });;
+
+    }
+
+
+
 
 </script>
 
