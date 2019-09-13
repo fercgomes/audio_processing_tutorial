@@ -15,7 +15,7 @@ class DelayProcessor extends AudioWorkletProcessor {
     const input = inputs[0];
     const output = outputs[0];
     const delay = parameters.delay;
-    float decay = 0.8;
+    const decay = 0.8;
 
     for (let channel = 0; channel < input.length; ++channel) {
       const inputChannel = input[channel];
