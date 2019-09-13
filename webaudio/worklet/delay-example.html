@@ -44,7 +44,7 @@
                 console.log("delay: :" + window.delayWorkletNode );
 
                 const delayParam = window.delayWorkletNode.parameters.get('delay');
-                delayParam.value =  this.value * 44.1;
+                delayParam.value =  Math.round(this.value * 44.1); //in samples
 
             });;
 
