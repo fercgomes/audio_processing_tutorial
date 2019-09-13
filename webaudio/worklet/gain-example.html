@@ -55,6 +55,9 @@
                 //window.E.frequency.value = this.value;
                 console.log("range value:" + this.value);
                 console.log("gain: :" + window.gainWorkletNode );
+
+                window.gainWorkletNode.gain = this.value/10000;
+
             });;
 
 }
