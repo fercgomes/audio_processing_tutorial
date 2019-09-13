@@ -4,7 +4,39 @@
 <script>
         var context = new(window.AudioContext || window.webkitAudioContext)();
 
- //function runDemo() {
+
+        function audio_resume() {
+            bt_div = this;
+            if (context.state === 'running') {
+                context.suspend().then(function() {
+                    bt_div.style.backgroundColor = "red";
+                });
+            } else if (context.state === 'suspended') {
+                context.resume().then(function() {
+                    console.log('Playback resumed successfully');
+                    bt_div.style.backgroundColor = "green";
+                });
+            }
+        }
+
+   function start_microphone(stream) {
+  // Loads module script via AudioWorklet.
+  context.audioWorklet.addModule('delay-processor.js').then(() => {
+    //let oscillator = new OscillatorNode(context);
+      let microphone_stream = window.context.createMediaStreamSource(stream);
+
+    // After the resolution of module loading, an AudioWorkletNode can be
+    // constructed.
+    let delayWorkletNode = new AudioWorkletNode(context, 'delay-processor');
+
+       window.delayWorkletNode = delayWorkletNode;
+    // AudioWorkletNode can be interoperable with other native AudioNodes.
+    microphone_stream.connect(delayWorkletNode).connect(context.destination);
+    //oscillator.connect(delayWorkletNode).connect(context.destination);
+    //oscillator.start();
+  });
+
+       
    function init_on_load() {
 
         if (!navigator.getUserMedia)
@@ -36,38 +68,6 @@
 
 
 
-        function audio_resume() {
-            bt_div = this;
-            if (context.state === 'running') {
-                context.suspend().then(function() {
-                    bt_div.style.backgroundColor = "red";
-                });
-            } else if (context.state === 'suspended') {
-                context.resume().then(function() {
-                    console.log('Playback resumed successfully');
-                    bt_div.style.backgroundColor = "green";
-                });
-            }
-        }
-
-   function start_microphon() {
-  // Loads module script via AudioWorklet.
-  context.audioWorklet.addModule('delay-processor.js').then(() => {
-    //let oscillator = new OscillatorNode(context);
-      let microphone_stream = window.context.createMediaStreamSource(stream);
-
-    // After the resolution of module loading, an AudioWorkletNode can be
-    // constructed.
-    let delayWorkletNode = new AudioWorkletNode(context, 'delay-processor');
-
-       window.delayWorkletNode = delayWorkletNode;
-    // AudioWorkletNode can be interoperable with other native AudioNodes.
-    microphone_stream.connect(delayWorkletNode).connect(context.destination);
-    //oscillator.connect(delayWorkletNode).connect(context.destination);
-    //oscillator.start();
-  });
-
-       
    var bt = document.getElementById("bt-resume");
    bt.addEventListener('click', audio_resume);
 
