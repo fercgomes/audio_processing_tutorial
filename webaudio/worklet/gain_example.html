@@ -2,6 +2,10 @@
 <!doctype html>
 <html>
 <script>
+
+// Existing code unchanged.
+window.onload = function() {
+
   const context = new AudioContext();
 
   // Loads module script via AudioWorklet.
@@ -20,6 +24,7 @@
     oscillator.connect(gainWorkletNode).connect(context.destination);
     oscillator.start();
   });
+}
 </script>
 </html>
 
