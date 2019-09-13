@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>exer04</title>
+    <script type="text/javascript" src="exerc04/Buffer.js"></script>
+    <script type="text/javascript" src="exerc04/Sound.js"></script>
+    <script>
+        //
+
+        function setup() {
+
+            let sounds = [
+                //                'https://s3-us-west-2.amazonaws.com/s.cdpn.io/355309/G4.mp3',
+                //                'https://s3-us-west-2.amazonaws.com/s.cdpn.io/355309/A4.mp3',
+                //                'https://s3-us-west-2.amazonaws.com/s.cdpn.io/355309/C5.mp3',
+                //            'https://s3-us-west-2.amazonaws.com/s.cdpn.io/355309/D5.mp3',                                
+                'samples/D5.mp3',
+                'samples/E5.mp3',
+                'samples/G5.mp3',
+                'samples/A5.mp3'
+            ];
+
+            var context = new(window.AudioContext || window.webkitAudioContext)();
+
+            // carrega todos os mp3 (vai demorar....)
+            let buffer = new Buffer(context, sounds);
+            buffer.loadAll();
+
+            window.sounds = sounds;
+            window.buffer = buffer;
+            window.context = context;
+
+            window.audio_resume = function() {
+                console.log('audio resume');
+
+                bt_div = this;
+                if (window.context.state === 'running') {
+                    window.context.suspend().then(function() {
+                        bt_div.style.backgroundColor = "red";
+                    });
+                } else if (context.state === 'suspended') {
+                    window.context.resume().then(function() {
+                        console.log('Playback resumed successfully');
+                        bt_div.style.backgroundColor = "green";
+                    });
+                }
+            }
+
+            window.play_snd = function() {
+                sound = new Sound(window.context, window.buffer.getSoundByIndex(Number(this.innerHTML)));
+                sound.play();
+            }
+
+        }
+
+        function init_on_load() {
+            setup();
+
+            bt = document.getElementById("bt-resume");
+            bt.addEventListener('click', audio_resume);
+
+            bt1 = document.getElementById("bt-play1");
+            bt1.addEventListener('click', play_snd);
+            bt2 = document.getElementById("bt-play2");
+            bt2.addEventListener('click', play_snd);
+            bt3 = document.getElementById("bt-play3");
+            bt3.addEventListener('click', play_snd);
+
+        }
+
+    </script>
+</head>
+
+<body onload="init_on_load()">
+
+    <span>Exercício 04</span>
+    <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
+
+    <div id="bt-play1" style="position: absolute; top:150px; left:100px; width:40px; height:40px; border: 1px solid black; background-color: lightgray; "> 1 </div>
+    <div id="bt-play2" style="position: absolute; top:200px; left:100px; width:40px; height:40px; border: 1px solid black; background-color: lightgray; "> 2 </div>
+    <div id="bt-play3" style="position: absolute; top:250px; left:100px; width:40px; height:40px; border: 1px solid black; background-color: lightgray; "> 3 </div>
+
+
+
+</body>
+
+
+</html>

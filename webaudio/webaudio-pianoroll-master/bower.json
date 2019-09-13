@@ -1,0 +1,19 @@
+{
+  "name": "webaudio-pianoroll",
+  "homepage": "https://github.com/g200kg/webaudio-pianoroll",
+  "authors": [
+    "Tatsuya Shinyagaito <gaito@g200kg.com>"
+  ],
+  "description": "",
+  "main": "webaudio-pianoroll.js",
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

@@ -1,0 +1,123 @@
+<!-- 
+Copyright (c) 2017 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+
+
+
+<script>
+    function detectAudioWorklet() {
+        let context = new OfflineAudioContext(1, 1, 44100);
+        return Boolean(
+            context.audioWorklet &&
+            typeof context.audioWorklet.addModule === 'function');
+    }
+
+
+
+
+
+    function runDemo() {
+
+        if (!navigator.getUserMedia)
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({
+                    audio: true
+                },
+                function(stream) {
+                    console.log('starting mic');
+                    start_microphone(stream);
+                },
+                function(e) {
+                    alert('Error capturing audio.');
+                }
+            );
+
+        } else {
+            alert('getUserMedia not supported in this browser.');
+        }
+
+        if (!detectAudioWorklet) {
+            alert('Worklet not available!');
+        }
+
+    }
+
+    function start_microphone(stream) {
+
+        window.context = new AudioContext();
+        let microphone_stream = window.context.createMediaStreamSource(stream);
+        //microphone_stream.connect(gain_node);
+
+        window.context.audioWorklet.addModule('exerc05/bypass-processor.js').then(() => {
+            //let oscillator = new OscillatorNode(context);
+            let bypasser = new AudioWorkletNode(window.context, 'bypass-processor');
+            //oscillator.connect(bypasser).connect(context.destination);
+            //oscillator.start();
+            //microphone_stream.connect(context.destination);
+            microphone_stream.connect(bypasser).connect(window.context.destination);
+        });
+    }
+
+
+    //        AudioWorkletHelper.initializeDemo({
+    //            title: 'Hello AudioWorklet!',
+    //            description: `A simple AudioWorkletNode that bypasses the incoming audio 
+    //          stream to its output. The sound source a sine oscillator at 440Hz.`,
+    //            htmlSource: 'audio-worklet/basic/hello-audio-worklet.html',
+    //            jsSource: 'exerc05/bypass-processor.js',
+    //            demoFunction: runDemo
+    //        });
+
+    function audio_resume() {
+        console.log('audio resume');
+
+        bt_div = this;
+        if (window.context.state === 'running') {
+            window.context.suspend().then(function() {
+                bt_div.style.backgroundColor = "red";
+            });
+        } else if (context.state === 'suspended') {
+            window.context.resume().then(function() {
+                console.log('Playback resumed successfully');
+                bt_div.style.backgroundColor = "green";
+
+
+
+            });
+        }
+    }
+
+
+
+    function init_on_load() {
+
+        bt = document.getElementById("bt-resume");
+        bt.addEventListener('click', audio_resume);
+
+        console.log('runDemo');
+        runDemo();
+    }
+
+</script>
+
+
+<body onload="init_on_load()">
+    <span>Exercício 05</span>
+    <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
+
+</body>
+
+</html>
