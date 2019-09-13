@@ -37,6 +37,7 @@
     // constructed.
     let gainWorkletNode = new AudioWorkletNode(context, 'gain-processor');
 
+       window.gainWorkletNode = gainWorkletNode;
     // AudioWorkletNode can be interoperable with other native AudioNodes.
     oscillator.connect(gainWorkletNode).connect(context.destination);
     oscillator.start();
@@ -44,7 +45,7 @@
 
        
        
-       window.gainWorkletNode = gainWorkletNode;
+
 
    var bt = document.getElementById("bt-resume");
    bt.addEventListener('click', audio_resume);
