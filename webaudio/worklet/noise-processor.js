@@ -1,9 +1,9 @@
 
-class DelayProcessor extends AudioWorkletProcessor {
+class NoiseProcessor extends AudioWorkletProcessor {
 
   // Custom AudioParams can be defined with this static getter.
   static get parameterDescriptors() {
-    return [{ name: 'delay', defaultValue: 0 }]; //in samples
+    return [{ name: 'noise', defaultValue: 0 }]; //in samples
   }
 
   constructor() {
@@ -14,26 +14,22 @@ class DelayProcessor extends AudioWorkletProcessor {
   process(inputs, outputs, parameters) {
     const input = inputs[0];
     const output = outputs[0];
-    const delay = parameters.delay;
-    const decay = 0.8;
+    const noise = parameters.noise;
 
     for (let channel = 0; channel < input.length; ++channel) {
       const inputChannel = input[channel];
       const outputChannel = output[channel];
 
-      if (delay.length === 1) {
+      if (noise.length === 1) {
         for (let i = 0; i < inputChannel.length; ++i)
           {
-              //if (i+delay[0]<inputChannel.length)
-                outputChannel[i] += inputChannel[i];
-                //outputChannel[i + delay[0]] += inputChannel[i] * decay;
+              
+             outputChannel[i] = inputChannel[i] + Math.rand()*noise[0];;
           }
       } else {
         for (let i = 0; i < inputChannel.length; ++i)
           {
-             // if (i+delay[i]<inputChannel.length)
-                outputChannel[i] += inputChannel[i];
-                //outputChannel[i + delay[i]] += inputChannel[i] * decay;
+             outputChannel[i] = inputChannel[i] + Math.rand()*noise[i];;
           }
       }
     }
@@ -42,7 +38,7 @@ class DelayProcessor extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor('delay-processor', DelayProcessor);
+registerProcessor('noise-processor', NoiseProcessor);
 
 
 /*

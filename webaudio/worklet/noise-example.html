@@ -21,17 +21,17 @@
 
    function start_microphone(stream) {
   // Loads module script via AudioWorklet.
-  context.audioWorklet.addModule('delay-processor.js').then(() => {
+  context.audioWorklet.addModule('noise-processor.js').then(() => {
     //let oscillator = new OscillatorNode(context);
       let microphone_stream = window.context.createMediaStreamSource(stream);
 
     // After the resolution of module loading, an AudioWorkletNode can be
     // constructed.
-    let delayWorkletNode = new AudioWorkletNode(context, 'delay-processor');
+    let noiseWorkletNode = new AudioWorkletNode(context, 'noise-processor');
 
-       window.delayWorkletNode = delayWorkletNode;
+       window.noiseWorkletNode = noiseWorkletNode;
     // AudioWorkletNode can be interoperable with other native AudioNodes.
-    microphone_stream.connect(delayWorkletNode).connect(context.destination);
+    microphone_stream.connect(noiseWorkletNode).connect(context.destination);
     //oscillator.connect(delayWorkletNode).connect(context.destination);
     //oscillator.start();
   });
@@ -70,10 +70,10 @@
      bt2 = document.getElementById("bt-range");
             bt2.addEventListener('input', function() {
                 console.log("range value:" + this.value);
-                console.log("delay: :" + window.delayWorkletNode );
+                console.log("delay: :" + window.noiseWorkletNode );
 
-                const delayParam = window.delayWorkletNode.parameters.get('delay');
-                delayParam.value =  Math.round(this.value * 44.1); //in samples
+                const noiseParam = window.noiseWorkletNode.parameters.get('noise');
+                noiseParam.value =  Math.round(this.value); 
 
             });;
 
@@ -90,7 +90,7 @@
     <span>Exercício 01</span>
     <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
 
-  <input type="range" id="bt-range" min="0" max="2000" value="0" step="1" style="position: absolute; top: 100px; left: 100px; width: 300px">
+  <input type="range" id="bt-range" min="0" max="1" value="0" step=".05" style="position: absolute; top: 100px; left: 100px; width: 300px">
 
 
 </body>
