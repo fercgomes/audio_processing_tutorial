@@ -71,6 +71,8 @@ class SoundSynth {
         for (i = 0; i < t; i++) {
             this.adsrCurve[c++] = s_a + i * amp_step;
         }
+        
+        this.adsrCurve[this.adsrCurve.length - 1] = 0;
 
         this.gainNode.gain.setValueCurveAtTime(this.adsrCurve, this.context.currentTime, duration);
     }
