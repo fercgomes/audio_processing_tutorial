@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>exerc03</title>
+    <script type="text/javascript" src="exerc03/SoundSynthCompressor.js?v=1"></script>
+
+
+    <script>
+        //
+
+        function setup() {
+
+            var context = new(window.AudioContext || window.webkitAudioContext)();
+            window.context = context;
+
+            window.audio_resume = function() {
+                console.log('audio resume');
+
+                bt_div = this;
+                if (window.context.state === 'running') {
+                    window.context.suspend().then(function() {
+                        bt_div.style.backgroundColor = "red";
+                    });
+                } else if (context.state === 'suspended') {
+                    window.context.resume().then(function() {
+                        console.log('Playback resumed successfully');
+                        bt_div.style.backgroundColor = "green";
+                    });
+                }
+            }
+
+            window.play_snd = function() {
+                sound = new SoundSynth(window.context);
+
+                freq = Number(this.innerHTML);
+
+                //freq = 261.6;
+                type = "sine";
+                //type = "square";
+                //adsr_t = [0.5, 0.2, 0.2, 0.5]; // in seconds
+                adsr_t = [0.5, 0.1, 0.1, 0.4]; // in seconds
+                //adsr_t = [0.1, 0.1, 0.4, 0.1]; // in seconds
+                adsr_a = [0.5, 0.4, 0.4, 0.01]; // [0 ~1];
+                sound.play(freq, type, adsr_t, adsr_a);
+            }
+        }
+
+
+        function init_on_load() {
+            setup();
+
+            bt = document.getElementById("bt-resume");
+            bt.addEventListener('click', audio_resume);
+
+            bt1 = document.getElementById("bt-play1");
+            bt1.addEventListener('click', play_snd);
+            bt2 = document.getElementById("bt-play2");
+            bt2.addEventListener('click', play_snd);
+            bt3 = document.getElementById("bt-play3");
+            bt3.addEventListener('click', play_snd);
+            bt4 = document.getElementById("bt-play4");
+            bt4.addEventListener('click', play_snd);
+
+        }
+
+    </script>
+
+
+
+    <style>
+        #bt-resume {
+            position: absolute;
+            top: 50px;
+            left: 100px;
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: red;
+        }
+        
+        .bt-player {
+            position: absolute;
+            left: 200px;
+            width: 100px;
+            height: 50px;
+            border: 1px solid black;
+            background-color: lightgray;
+        }
+
+    </style>
+
+
+</head>
+
+<body onload="init_on_load()">
+
+    <span>Exercício 03</span>
+    <div id="bt-resume"> on/off </div>
+
+    <div id="bt-play1" class="bt-player" style="top: 150px"> 261.6</div>
+    <div id="bt-play2" class="bt-player" style="top: 200px"> 293.7</div>
+    <div id="bt-play3" class="bt-player" style="top: 250px"> 349.2</div>
+    <div id="bt-play4" class="bt-player" style="top: 300px"> 392.0</div>
+
+
+</body>
+
+
+</html>

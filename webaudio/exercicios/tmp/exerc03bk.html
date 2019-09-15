@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>exerc03</title>
+    <script>
+        //
+
+        var context = new(window.AudioContext || window.webkitAudioContext)();
+
+        function audio_resume() {
+            bt_div = this;
+            if (context.state === 'running') {
+                context.suspend().then(function() {
+                    bt_div.style.backgroundColor = "red";
+                });
+            } else if (context.state === 'suspended') {
+                context.resume().then(function() {
+                    console.log('Playback resumed successfully');
+                    bt_div.style.backgroundColor = "green";
+                });
+            }
+        }
+
+        function init_on_load() {
+
+            bt = document.getElementById("bt-resume");
+            bt.addEventListener('click', audio_resume);
+
+            var oscillator = context.createOscillator();
+            oscillator.type = 'sine';
+            oscillator.frequency.value = 261.6;
+            var now = context.currentTime;
+            oscillator.frequency.setValueAtTime(261.6, now + 0);
+            oscillator.frequency.setValueAtTime(293.7, now + 1);
+            oscillator.frequency.setValueAtTime(329.6, now + 2);
+            oscillator.frequency.setValueAtTime(349.2, now + 3);
+            oscillator.frequency.setValueAtTime(392.0, now + 4);
+            //
+            //            oscillator.start();
+            //            oscillator.stop(now + 5);
+            //            oscillator.connect(context.destination);
+
+
+            var waveArray = new Float32Array(9);
+            waveArray[0] = 0.01;
+            waveArray[1] = 1.0;
+            waveArray[2] = 0.7;
+            waveArray[3] = 0.7;
+            waveArray[4] = 0.7;
+            waveArray[5] = 0.6;
+            waveArray[6] = 0.5;
+            waveArray[7] = 0.4;
+            waveArray[8] = 0.01;
+
+            var gain = context.createGain();
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            //gain.gain.setValueAtTime(1, now);
+            //gain.gain.exponentialRampToValueAtTime(0.001, now + 5);
+            gain.gain.setValueCurveAtTime(waveArray, context.currentTime, 5);
+
+            oscillator.start(now);
+            oscillator.stop(now + 5);
+
+
+
+
+
+
+        }
+
+    </script>
+</head>
+
+<body onload="init_on_load()">
+    <span>Exercício 03</span>
+    <div id="bt-resume" style="position: absolute; top:50px; left:100px; width:50px; height:50px; border: 1px solid black; background-color: red; "> on/off </div>
+
+
+</body>
+
+
+</html>

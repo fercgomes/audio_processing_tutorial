@@ -1,0 +1,89 @@
+class SoundSynth {
+
+    constructor(context) {
+        this.context = context;
+        this.adsrCurve = new Float32Array(100);
+
+        this.mixNode = this.context.createGain();
+        this.mixNode.gain.value = 1.0;
+        this.DynamicCompressor = this.context.createDynamicsCompressor();
+        this.DynamicCompressor.threshold.value = -200;
+        this.DynamicCompressor.ratio.value = 5;
+        this.DynamicCompressor.attack.value = 0.0;
+        this.DynamicCompressor.release.value = .2;
+
+        this.mixNode.connect(this.DynamicCompressor);
+        this.DynamicCompressor.connect(this.context.destination);
+    }
+
+    init(freq, type) {
+        this.gainNode = this.context.createGain();
+        this.gainNode.gain.value = 0.01;
+
+        this.oscillator = context.createOscillator();
+        this.oscillator.type = type;
+        this.oscillator.frequency.value = freq;
+
+        this.oscillator.connect(this.gainNode);
+        //this.gainNode.connect(this.context.destination);
+        this.gainNode.connect(this.mixNode);
+    }
+
+    play(freq, type, adsr_t, adsr_a) {
+        this.init(freq, type);
+        this.makeRamp(adsr_t, adsr_a);
+        this.oscillator.start(this.context.currentTime);
+    }
+
+    stop() {
+        this.gainNode.gain.exponentialRampToValueAtTime(0.001, this.context.currentTime + 0.2);
+        this.oscillator.stop(this.context.currentTime + 0.2);
+    }
+
+    makeRamp(adsr_t, adsr_a) {
+
+        var duration = adsr_t[0] + adsr_t[1] + adsr_t[2] + adsr_t[3];
+        this.adsrCurve = new Float32Array(Math.round(duration * 100));
+
+        var a_t = adsr_t[0]; //0.3
+        var a_a = adsr_a[0]; //0.3
+
+        var d_t = adsr_t[2]; //0.3
+        var d_a = adsr_a[2]; //0.3
+
+        var s_t = adsr_t[3]; //0.3
+        var s_a = adsr_a[3]; //0.3
+
+        var r_t = adsr_t[4]; //0.3
+        var r_a = adsr_a[4]; //0.3
+
+        var i = 0;
+        var c = 0;
+        var t = Math.round(a_t * 100);
+        var amp_step = a_a / t;
+        for (i = 0; i < t; i++) {
+            this.adsrCurve[c++] = 0 + i * amp_step;
+        }
+
+        var t = Math.round(d_t * 100);
+        var amp_step = (d_a - a_a) / t;
+        for (i = 0; i < t; i++) {
+            this.adsrCurve[c++] = a_a + i * amp_step;
+        }
+
+        var t = Math.round(s_t * 100);
+        var amp_step = (s_a - d_a) / t;
+        for (i = 0; i < t; i++) {
+            this.adsrCurve[c++] = d_a + i * amp_step;
+        }
+
+        var t = Math.round(r_t * 100);
+        var amp_step = (r_a - s_a) / t;
+        for (i = 0; i < t; i++) {
+            this.adsrCurve[c++] = s_a + i * amp_step;
+        }
+
+        this.gainNode.gain.setValueCurveAtTime(this.adsrCurve, this.context.currentTime, duration);
+    }
+
+}

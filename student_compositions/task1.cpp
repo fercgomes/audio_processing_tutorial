@@ -10,7 +10,7 @@
 #include <vector>
 #include <algorithm>
 #include <cstring>
-#include "read_write_wav.h"
+#include "../c++/read_write_wav.h"
 using namespace std;
 
 

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" ></script>
+<script src="./webaudio-pianoroll.js"></script>
+</head>
+<body>
+<h3><a href="https://github.com/g200kg/webaudio-pianoroll">GitHub Respository</a></h3>
+<hr/>
+<h1>samples</h1>
+default, editmode="dragpoly"<br/>
+<webaudio-pianoroll></webaudio-pianoroll>
+<hr/>
+editmode="dragmono" color customized<br/>
+<webaudio-pianoroll
+    editmode="dragmono" yrange="32"
+    collt="#67a" coldk="#459"
+    grid="1"
+    snap="1"
+    colgrid="#99f"
+    colnote="#8af" colnotesel="#bdf"
+    colrulerbg="#87f" colrulerfg="#fff"
+    ></webaudio-pianoroll>
+<hr/>
+editmode="gridmono" with background image<br/>
+<webaudio-pianoroll
+    editmode="gridmono"
+    grid="1"
+    xrange="8" yrange="8"
+    bgsrc="./bg.jpg"
+    collt="rgba(255,255,255,0.7)"
+    coldk="rgba(200,200,200,0.7)"
+    ></webaudio-pianoroll>
+<hr/>
+editmode="gridpoly" xruler="0" yruler="0" kbwdidth="0" with background image<br/>
+<webaudio-pianoroll
+    editmode="gridpoly"
+    grid="1"
+    xruler="0" yruler="0"
+    kbwidth="0"
+    xrange="8" yrange="8"
+    bgsrc="./bg.jpg"
+    collt="rgba(255,200,255,0.7)"
+    coldk="rgba(200,160,200,0.7)"
+    ></webaudio-pianoroll>
+<hr/>
+editmode="dragpoly" timebase="480"<br/>
+<webaudio-pianoroll
+    timebase="480" xrange="1920" grid="120"
+    markstart="0" markend="1920"
+    grid="1920" editmode="dragpoly"
+    wheelzoom="1"
+    ></webaudio-pianoroll>
+<hr/>
+
+</body>
+</html>
