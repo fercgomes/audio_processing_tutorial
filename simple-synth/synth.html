@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="synth.css">
+    <title>Simple synthesizer</title>
+</head>
+<body>
+    <div class="container keyboard-box">
+        <!-- TODO:
+            - Organ like knobs for harmonics
+        -->
+        <webaudio-keyboard keys="50" width="960" id="keyboard"></webaudio-keyboard>
+    </div>
+
+    <script src="https://g200kg.github.io/webaudio-controls/webaudio-controls.js" ></script>
+    <script src="frequency.js"></script>
+    <script src="synth.js"></script>
+    <script src="controller.js"></script>
+</body>
+</html>
